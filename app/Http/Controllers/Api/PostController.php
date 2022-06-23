@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest\StoreRequest;
 use App\Http\Requests\PostRequest\PostTagStoreRequest as TagsRequest;
@@ -42,6 +44,11 @@ class PostController extends Controller
         return response('You are successfully created the post');
     }
 
+
+    /**
+     * @param TagsRequest $request
+     * @return Application|ResponseFactory|Response
+     */
     public function createTag(TagsRequest $request)
     {
         $post_id = $request->post_id;
@@ -51,6 +58,11 @@ class PostController extends Controller
         return response('You are successfully added tag to post');
 
     }
+
+    /**
+     * @param $id
+     * @return Application|ResponseFactory|Response
+     */
     public function getTag($id)
     {
         $tags = Tag::where('id', $id)->with(['posts' => function($q){
