@@ -60,6 +60,21 @@ class PostController extends Controller
     }
 
     /**
+     * @param TagsRequest $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function removeTag(TagsRequest $request)
+    {
+        $post_id = $request->post_id;
+        $tag_id = $request->tag_id;
+        $post = Post::find($post_id);
+        $tag = Tag::find($tag_id);
+        $post->tags()->detach($tag);
+
+        return response('You are successfully deleted post tag');
+    }
+
+    /**
      * @param $id
      * @return Application|ResponseFactory|Response
      */

@@ -31,6 +31,8 @@ Route::group(['middleware' => 'api','jwt.auth'], function () {
     Route::post('create_tag', [PostController::class, 'createTag']);
 //  GET POSTS OF TAG AND HIS TAGS
     Route::get('get_tag/{id}', [PostController::class, 'getTag']);
+//    REMOVE POST TAG
+    Route::post('remove_tag', [PostController::class, 'removeTag']);
     Route::apiResource('tags', TagController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('comments', CommentController::class);
