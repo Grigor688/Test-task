@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest\StoreRequest;
+use App\Http\Requests\CommentRequest\UpdateRequest;
 use Illuminate\Http\Response;
 
 class CommentController extends Controller
@@ -51,13 +52,16 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param UpdateRequest $request
+     * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $post = Comment::findOrFail($id);
+        $post->update($request->validated());
+
+        return response('You are successfully updated the comment');
     }
 
     /**

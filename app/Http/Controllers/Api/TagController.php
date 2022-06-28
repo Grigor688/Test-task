@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TagRequest\StoreRequest;
+use App\Http\Requests\TagRequest\UpdateRequest;
 use App\Models\Comment;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -53,13 +54,16 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param UpdateRequest $request
+     * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $post = Tag::findOrFail($id);
+        $post->update($request->validated());
+
+        return response('You are successfully updated the tag');
     }
 
     /**

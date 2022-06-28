@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest\StoreRequest;
+use App\Http\Requests\PostRequest\UpdateRequest;
 use App\Http\Requests\PostRequest\PostTagStoreRequest as TagsRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -98,19 +99,21 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param UpdateRequest $request
+     * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->validated());
+
+        return response('You are successfully updated the post');
     }
 
     /**
