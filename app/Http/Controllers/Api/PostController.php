@@ -42,7 +42,8 @@ class PostController extends Controller
             'title' => $request['title'],
             'comment_id' => $request['comment_id'],
         ]);
-        return response('You are successfully created the post');
+
+        return response(['message' => 'You are successfully created the post'], Response::HTTP_OK);
     }
 
 
@@ -56,7 +57,7 @@ class PostController extends Controller
         $post = Post::find($post_id);
         $post->tags()->attach([$request->all()]);
 
-        return response('You are successfully added tag to post');
+        return response(['message' => 'You are successfully added tag to post'], Response::HTTP_OK);
 
     }
 
@@ -72,14 +73,14 @@ class PostController extends Controller
         $tag = Tag::find($tag_id);
         $post->tags()->detach($tag);
 
-        return response('You are successfully deleted post tag');
+        return response(['message' => 'You are successfully deleted post tag'], Response::HTTP_OK);
     }
 
     /**
      * @param $id
      * @return Application|ResponseFactory|Response
      */
-    public function getTag($id)
+    public function getTag(int $id): Response
     {
         $tags = Tag::where('id', $id)->with(['posts' => function($q){
             $q->join('post_tag as rel', 'rel.post_id', 'posts.id')
@@ -108,12 +109,12 @@ class PostController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, int $id): Response
     {
         $post = Post::findOrFail($id);
         $post->update($request->validated());
 
-        return response('You are successfully updated the post');
+        return response(['message' => 'You are successfully updated the post'], Response::HTTP_OK);
     }
 
     /**
@@ -122,9 +123,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         Post::findOrFail($id)->delete();
-        return response('Post successfully deleted');
+
+        return response(['message' => 'Post successfully deleted'], Response::HTTP_OK);
     }
 }

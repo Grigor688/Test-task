@@ -31,11 +31,12 @@ class CommentController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $comment = Comment::query();
-        $comment->create([
+        Comment::create([
             'title' => $request['title']
         ]);
-        return response('You are successfully created the comment');
+
+        return response(['message' => 'You are successfully created the comment'], Response::HTTP_OK);
+
     }
 
     /**
@@ -56,12 +57,12 @@ class CommentController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, int $id): Response
     {
         $post = Comment::findOrFail($id);
         $post->update($request->validated());
 
-        return response('You are successfully updated the comment');
+        return response(['message' => 'You are successfully updated the comment'], Response::HTTP_OK);
     }
 
     /**
@@ -70,9 +71,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         Comment::findOrFail($id)->delete();
-        return response('Comment successfully deleted');
+
+        return response(['message' => 'Comment successfully deleted'], Response::HTTP_OK);
     }
 }

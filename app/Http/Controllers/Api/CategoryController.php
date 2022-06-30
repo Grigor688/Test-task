@@ -30,11 +30,11 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $category = Category::query();
-        $category->create([
+        Category::create([
             'name' => $request['name']
         ]);
-        return response('You are successfully created the category');
+
+        return response(['message' => 'You are successfully created the category'], Response::HTTP_OK);
     }
 
     /**
@@ -55,12 +55,12 @@ class CategoryController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, int $id): Response
     {
         $post = Category::findOrFail($id);
         $post->update($request->validated());
 
-        return response('You are successfully updated the category');
+        return response(['message' => 'You are successfully updated the category'], Response::HTTP_OK);
     }
 
     /**
@@ -69,9 +69,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         Category::findOrFail($id)->delete();
-        return response('Category successfully deleted');
+
+        return response(['message' => 'Category successfully deleted'], Response::HTTP_OK);
     }
 }

@@ -33,11 +33,11 @@ class TagController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $tag = Tag::query();
-        $tag->create([
+        Tag::create([
             'name' => $request['name']
         ]);
-        return response('You are successfully created the tag');
+
+        return response(['message' => 'You are successfully created the tag'], Response::HTTP_OK);
     }
 
     /**
@@ -58,12 +58,12 @@ class TagController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, int $id): Response
     {
         $post = Tag::findOrFail($id);
         $post->update($request->validated());
 
-        return response('You are successfully updated the tag');
+        return response(['message' => 'You are successfully updated the tag'], Response::HTTP_OK);
     }
 
     /**
@@ -72,9 +72,10 @@ class TagController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         Tag::findOrFail($id)->delete();
-        return response('Tag successfully deleted');
+
+        return response(['message' => 'Tag successfully deleted'], Response::HTTP_OK);
     }
 }

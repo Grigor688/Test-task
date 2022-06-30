@@ -27,11 +27,14 @@ Route::group(['middleware' => 'api','jwt.auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::apiResource('post', PostController::class);
+
     //  USE TAG FROM POST
     Route::post('create_tag', [PostController::class, 'createTag']);
-//  GET POSTS OF TAG AND HIS TAGS
+
+    //GET POSTS OF TAG AND HIS TAGS
     Route::get('get_tag/{id}', [PostController::class, 'getTag']);
-//    REMOVE POST TAG
+
+    //REMOVE POST TAG
     Route::post('remove_tag', [PostController::class, 'removeTag']);
     Route::apiResource('tags', TagController::class);
     Route::apiResource('categories', CategoryController::class);
