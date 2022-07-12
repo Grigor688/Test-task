@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
+use App\Http\Resources\PostResourceCollection;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
@@ -26,7 +28,8 @@ class PostController extends Controller
     {
         $user_id = auth()->user()['id'];
         $posts = Post::query()->with(['user','comments', 'category', 'tags'])->where('user_id', $user_id)->get();
-        return response($posts);
+//        return response($posts);
+        return new PostResourceCollection($posts);
     }
 
     /**
@@ -89,7 +92,7 @@ class PostController extends Controller
                 ->select(['posts.*', DB::raw("Group_concat(tags.name) as tags")]);
         }])->get();
 
-        return response($tags);
+        return response([$tags], Response::HTTP_OK);
     }
 
     /**
